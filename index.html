@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link
+        href="https://cdn.jsdelivr.net/npm/remixicon@4.7.0/fonts/remixicon.css"
+        rel="stylesheet"
+    />
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="theme.css">
+    <title>Image Enhancer</title>
+</head>
+<body>
+    <header></header>
+    <main>
+        <section>
+            <div class="left">
+                <!-- top contain the buttons  -->
+                <div class="top">
+                    <label for="image-input" class="btn">
+                        choose Image
+                        <input type="file" id="image-input" accept="image/*" hidden>
+                    </label>
+                    <button class = "btn" type="reset">Reset</button>
+                    <button class = "btn" type="button">Download</button>
+                </div>
+                 <!-- section contain the image -->
+                <div class="bottom">
+                    <div class="placeholder">
+                        <i class="ri-image-line"></i>
+                        <p>No image selected</p>
+                    </div>
+
+                </div>
+            </div>
+            <!-- Right side of the Project -->
+            <div class="right">
+                <h2>Filters</h2>
+                <div class="filters">
+
+                    <div class="filter">
+                        <p>Brightness</p>
+                        <input name="brightness" value="100" type="range" min="0" max="200" >
+                    </div>
+
+                </div>
+            </div>
+        </section>
+    </main>
+    <footer></footer>
+    
+    <script src="script.js"></script>
+</body>
+</html>
