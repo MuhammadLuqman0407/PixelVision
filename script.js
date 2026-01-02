@@ -1,3 +1,5 @@
+const filterContainer = document.querySelector('.filters');
+
 const filters = {
     brigntess: {
         value: 100,
@@ -63,6 +65,7 @@ const filters = {
 
 
 function createFilter(name,unit="%",value,min,max){
+function createFilterElement(name,unit="%",value,min,max){
     const div = document.createElement("div")
     div.classList.add("filter")
 
@@ -81,3 +84,10 @@ function createFilter(name,unit="%",value,min,max){
 
     return div
 }
+}
+
+Object.keys(filters).forEach(key=>{
+    const filterElement = createFilterElement(key, filters[key].unit, filters[key].value, filters[key].min, filters[key].max);
+    
+    filterContainer.appendChild(filterElement);
+})
