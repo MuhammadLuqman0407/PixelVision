@@ -3,6 +3,9 @@ const imageCanvas = document.querySelector("#image-canvas")
 const imgInput = document.querySelector("#image-input")
 const canvasCtx = imageCanvas.getContext("2d")
 
+let file = null
+let image = null
+
 const filters = {
     brigntess: {
         value: 100,
@@ -84,6 +87,11 @@ function createFilterElement(name,unit="%",value,min,max){
     div.appendChild(p)
     div.appendChild(input)
 
+    input.addEventListener("input",(event)=>{
+        filters[name].value = input.value
+        console.log(name,filters[name]["value"]);
+        
+    })
     return div
 }
 
@@ -96,14 +104,21 @@ Object.keys(filters).forEach(key=>{
 imgInput.addEventListener("change",(event) =>{
     const file = event.target.files[0]
     const imagePlaceholder = document.querySelector('.placeholder')
+    imageCanvas.style.display = "block" 
     imagePlaceholder.style.display = "none"
 
     const img = new Image()
     img.src = URL.createObjectURL(file)
 
     img.onload = () =>{
+        image = img
         imageCanvas.width = img.width
         imageCanvas.height = img.height
         canvasCtx.drawImage(img,0,0)
     }
 })
+
+function applyBlur(){
+    canvasCtx.filter = `blur(10px)})`
+    canvasCtx.drawImage(image,0,0)
+}
