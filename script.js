@@ -1,4 +1,7 @@
 const filterContainer = document.querySelector('.filters');
+const imageCanvas = document.querySelector("#image-canvas")
+const imgInput = document.querySelector("#image-input")
+const canvasCtx = imageCanvas.getContext("2d")
 
 const filters = {
     brigntess: {
@@ -88,4 +91,19 @@ Object.keys(filters).forEach(key=>{
     const filterElement = createFilterElement(key, filters[key].unit, filters[key].value, filters[key].min, filters[key].max);
     
     filterContainer.appendChild(filterElement);
+})
+
+imgInput.addEventListener("change",(event) =>{
+    const file = event.target.files[0]
+    const imagePlaceholder = document.querySelector('.placeholder')
+    imagePlaceholder.style.display = "none"
+
+    const img = new Image()
+    img.src = URL.createObjectURL(file)
+
+    img.onload = () =>{
+        imageCanvas.width = img.width
+        imageCanvas.height = img.height
+        canvasCtx.drawImage(img,0,0)
+    }
 })
