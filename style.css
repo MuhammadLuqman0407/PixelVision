@@ -139,3 +139,9 @@ main section .right .filter input::-moz-range-track{
     /* height: 3px; */
     border-radius: 10%;
 }
+
+canvas{
+    max-width: 99%;
+    max-height: 99%;
+    border-radius:0.4rem;
+}
