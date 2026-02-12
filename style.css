@@ -146,3 +146,14 @@ canvas{
     border-radius:0.4rem;
     display: none;
 }
+
+.presets{
+    display: flex;
+    flex-wrap: wrap;
+    gap:var(--gutter-sm);
+    padding-top: 10px;
+}
+
+#present-id{
+    padding: 5px;
+}
