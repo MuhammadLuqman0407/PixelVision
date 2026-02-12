@@ -2,12 +2,14 @@ const filterContainer = document.querySelector('.filters');
 const imageCanvas = document.querySelector("#image-canvas")
 const imgInput = document.querySelector("#image-input")
 const canvasCtx = imageCanvas.getContext("2d")
-
+const resetButton = document.querySelector("#reset-btn") 
+const downloadButton = document.querySelector("#download-btn")
 let file = null
 let image = null
 
+
 const filters = {
-    brigntess: {
+    brightness: {
         value: 100,
         min: 0,
         max: 200,
@@ -70,7 +72,7 @@ const filters = {
 }
 
 
-function createFilterElement(name,unit="%",value,min,max){
+function createFilterElement(name, unit="%", value, min, max){
     const div = document.createElement("div")
     div.classList.add("filter")
 
@@ -87,21 +89,24 @@ function createFilterElement(name,unit="%",value,min,max){
     div.appendChild(p)
     div.appendChild(input)
 
-    input.addEventListener("input",(event)=>{
+    input.addEventListener("input", (event)=>{
         filters[name].value = input.value
-        console.log(name,filters[name]["value"]);
-        
+        console.log(name, filters[name].value);
+        applyFilter() // ✅ Apply filter when slider changes
     })
     return div
 }
 
-Object.keys(filters).forEach(key=>{
-    const filterElement = createFilterElement(key, filters[key].unit, filters[key].value, filters[key].min, filters[key].max);
-    
-    filterContainer.appendChild(filterElement);
-})
+function createFilters(){
+    Object.keys(filters).forEach(key=>{
+        const filterElement = createFilterElement(key, filters[key].unit, filters[key].value, filters[key].min, filters[key].max);
+        filterContainer.appendChild(filterElement);
+    })
+}
 
-imgInput.addEventListener("change",(event) =>{
+createFilters()
+
+imgInput.addEventListener("change", (event) =>{
     const file = event.target.files[0]
     const imagePlaceholder = document.querySelector('.placeholder')
     imageCanvas.style.display = "block" 
@@ -114,11 +119,63 @@ imgInput.addEventListener("change",(event) =>{
         image = img
         imageCanvas.width = img.width
         imageCanvas.height = img.height
-        canvasCtx.drawImage(img,0,0)
+        canvasCtx.drawImage(img, 0, 0)
+        applyFilter() // ✅ Apply filters after image loads
     }
 })
 
-function applyBlur(){
-    canvasCtx.filter = `blur(10px)})`
-    canvasCtx.drawImage(image,0,0)
+function applyFilter(){
+    // ✅ FIX: Check if image exists before applying filters
+    if(!image) return
+    
+    canvasCtx.clearRect(0, 0, imageCanvas.width, imageCanvas.height)
+    
+    // ✅ Build filter string properly with spaces between filters
+    canvasCtx.filter = `
+        brightness(${filters.brightness.value}${filters.brightness.unit})
+        contrast(${filters.contrast.value}${filters.contrast.unit})
+        saturate(${filters.saturation.value}${filters.saturation.unit})
+        hue-rotate(${filters.hueRotation.value}${filters.hueRotation.unit})
+        blur(${filters.blur.value}${filters.blur.unit})
+        grayscale(${filters.grayscale.value}${filters.grayscale.unit})
+        sepia(${filters.sepia.value}${filters.sepia.unit})
+        opacity(${filters.opacity.value}${filters.opacity.unit})
+        invert(${filters.invert.value}${filters.invert.unit})
+    `
+    
+    canvasCtx.drawImage(image, 0, 0)
 }
+
+
+resetButton.addEventListener("click", ()=>{
+    // ✅ Reset all filter values to default
+    filters.brightness.value = 100
+    filters.contrast.value = 100
+    filters.exposure.value = 100
+    filters.saturation.value = 100
+    filters.hueRotation.value = 0
+    filters.blur.value = 0
+    filters.grayscale.value = 0
+    filters.sepia.value = 0
+    filters.opacity.value = 100
+    filters.invert.value = 0
+    
+    applyFilter() // ✅ Redraw with default values
+    
+    // ✅ Update all slider inputs to reflect reset
+    Object.keys(filters).forEach(key => {
+        const input = document.querySelector(`#${key}`)
+        if(input) input.value = filters[key].value
+    })
+})
+
+downloadButton.addEventListener("click", ()=>{
+    if(!image) {
+        alert("Please load an image first!")
+        return
+    }
+    const link = document.createElement("a")
+    link.download = "edited-image.png"
+    link.href = imageCanvas.toDataURL()
+    link.click()
+})
