@@ -1,7 +1,14 @@
-<<<<<<< HEAD
-# PixelVision
-This is the Image Editior Repo + Image Enhancer
-=======
+Pixel Vision -> Image editior (in progress)
 
-Create the Image Enhancer Web app 
->>>>>>> 171e8d6fb5bfca4f3c7c63c1fc49f2884d3d963c
+--------------------------------------------
+
+Add Soon functionalities
+--------------------------------------------
+
+
+--------------------------------------------
+
+
+
+
+--------------------------------------------

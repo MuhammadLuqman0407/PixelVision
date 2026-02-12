@@ -96,6 +96,7 @@ function createFilterElement(name, unit="%", value, min, max){
     })
     return div
 }
+}
 
 function createFilters(){
     Object.keys(filters).forEach(key=>{
