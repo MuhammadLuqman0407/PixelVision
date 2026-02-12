@@ -4,6 +4,8 @@ const imgInput = document.querySelector("#image-input")
 const canvasCtx = imageCanvas.getContext("2d")
 const resetButton = document.querySelector("#reset-btn") 
 const downloadButton = document.querySelector("#download-btn")
+const presetsContainer = document.querySelector(".presets")
+
 let file = null
 let image = null
 
@@ -19,12 +21,6 @@ const filters = {
         value: 100,
         min: 0,
         max: 200,
-        unit:"%",
-    },
-    exposure: {
-        value: 100,
-        min: 0,
-        max: 200, 
         unit:"%",
     },
     saturation: {
@@ -179,4 +175,146 @@ downloadButton.addEventListener("click", ()=>{
     link.download = "edited-image.png"
     link.href = imageCanvas.toDataURL()
     link.click()
+})
+
+
+
+const presets = {
+    normal: {
+        brightness: 100,
+        contrast: 100,
+        saturation: 100,
+        hueRotation: 0,
+        blur: 0,
+        grayscale: 0,
+        sepia: 0,
+        opacity: 100,
+        invert: 0
+    },
+
+    drama: {
+        brightness: 90,
+        contrast: 140,
+        saturation: 80,
+        hueRotation: 0,
+        blur: 0,
+        grayscale: 20,
+        sepia: 10,
+        opacity: 100,
+        invert: 0
+    },
+
+    vintage: {
+        brightness: 105,
+        contrast: 85,
+        saturation: 75,
+        hueRotation: 10,
+        blur: 0,
+        grayscale: 15,
+        sepia: 60,
+        opacity: 100,
+        invert: 0
+    },
+
+    oldSchool: {
+        brightness: 95,
+        contrast: 110,
+        saturation: 60,
+        hueRotation: 5,
+        blur: 0,
+        grayscale: 40,
+        sepia: 70,
+        opacity: 100,
+        invert: 0
+    },
+
+    cinematic: {
+        brightness: 95,
+        contrast: 125,
+        saturation: 85,
+        hueRotation: 350,
+        blur: 0,
+        grayscale: 10,
+        sepia: 20,
+        opacity: 100,
+        invert: 0
+    },
+
+    coolBlue: {
+        brightness: 100,
+        contrast: 110,
+        saturation: 110,
+        hueRotation: 200,
+        blur: 0,
+        grayscale: 0,
+        sepia: 0,
+        opacity: 100,
+        invert: 0
+    },
+
+    warmGlow: {
+        brightness: 110,
+        contrast: 105,
+        saturation: 115,
+        hueRotation: 15,
+        blur: 0,
+        grayscale: 0,
+        sepia: 30,
+        opacity: 100,
+        invert: 0
+    },
+
+    faded: {
+        brightness: 110,
+        contrast: 75,
+        saturation: 70,
+        hueRotation: 0,
+        blur: 0,
+        grayscale: 10,
+        sepia: 25,
+        opacity: 90,
+        invert: 0
+    },
+
+    noir: {
+        brightness: 90,
+        contrast: 150,
+        saturation: 0,
+        hueRotation: 0,
+        blur: 0,
+        grayscale: 100,
+        sepia: 0,
+        opacity: 100,
+        invert: 0
+    },
+
+    dreamy: {
+        brightness: 110,
+        contrast: 90,
+        saturation: 105,
+        hueRotation: 20,
+        blur: 4,
+        grayscale: 0,
+        sepia: 15,
+        opacity: 95,
+        invert: 0
+    }
+};
+
+Object.keys(presets).forEach(presetName =>{
+    const presetButton = document.createElement("button")
+    presetButton.classList.add("btn")
+    presetButton.innerHTML = presetName
+    presetsContainer.appendChild(presetButton)
+
+    presetButton.addEventListener("click", ()=>{
+        
+        const preset = presets[presetName]
+        Object.keys(preset).forEach(filterName =>{
+            filters[filterName].value = preset[filterName]
+        })
+        applyFilter() // ✅ Apply preset filters
+        filterContainer.innerHTML = "" // ✅ Clear existing filter sliders
+        createFilters() // ✅ Recreate sliders with updated values
+    })
 })
