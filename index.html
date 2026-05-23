@@ -1,68 +1,89 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link
-        href="https://cdn.jsdelivr.net/npm/remixicon@4.7.0/fonts/remixicon.css"
-        rel="stylesheet"
-    />
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@4.7.0/fonts/remixicon.css" rel="stylesheet" />
+    <title>PixelVision • Image Enhancer</title>
     <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="theme.css">
-    <title>Image Enhancer</title>
 </head>
 <body>
-    <header></header>
-    <main>
-        <section>
-            <div class="left">
-                <!-- top contain the buttons  -->
-                <div class="top">
-                    <label for="image-input" class="btn">
-                        choose Image
-                        <input type="file" id="image-input" accept="image/*" hidden>
-                    </label>
-                    <button class = "btn" type="reset" id="reset-btn">Reset</button>
-                    <button class = "btn" type="button" id="download-btn">Download</button>
-                </div>
-                 <!-- section contain the image -->
-                <div class="bottom">
-                    <div class="placeholder">
+<div class="page-shell">
+
+    <header class="app-header">
+        <div class="brand">
+            <span class="brand-mark">PV</span>
+            <div>
+                <h1>PixelVision</h1>
+                <p>Advanced glassmorphism image enhancer</p>
+            </div>
+        </div>
+        <div class="header-actions">
+            <label for="image-input" class="btn btn-upload">
+                <i class="ri-image-add-line"></i> Choose Image
+                <input type="file" id="image-input" accept="image/*" hidden />
+            </label>
+            <button id="download-btn" class="btn btn-primary" type="button">
+                <i class="ri-download-2-line"></i> Download
+            </button>
+            <button id="reset-btn" class="btn btn-secondary" type="button">
+                <i class="ri-refresh-line"></i> Reset
+            </button>
+        </div>
+    </header>
+
+    <main class="layout-grid">
+
+        <!-- ── Left: Image Canvas ── -->
+        <section class="panel panel-left">
+            <div class="panel-body">
+                <div class="image-card">
+                    <div class="placeholder" id="placeholder">
                         <i class="ri-image-line"></i>
                         <p>No image selected</p>
                     </div>
-
-                    <canvas id="image-canvas"></canvas>
-
-                </div>
-            </div>
-            <!-- Right side of the Project -->
-            <div class="right">
-                <h2>Filters</h2>
-                <div class="filters">
-
-                    <div class="filter">
-                        <p>Brightness</p>
-                        <input name="brightness" value="100" type="range" min="0" max="200" >
-                    </div>
-                    <!-- <div class="filter">
-                        <p>Brightness</p>
-                        <input name="brightness" value="100" type="range" min="0" max="200" >
-                    </div> -->
-
-                </div>
-                <h2 class="preset" id="present-id">
-                    Presets
-                    <div class="presets"></div>
-                </h2>
-                <div>
-
+                    <canvas id="image-canvas" aria-label="Edited image canvas"></canvas>
                 </div>
             </div>
         </section>
+
+        <!-- ── Right: Filters (fixed height, scrollable) ── -->
+        <aside class="panel panel-right">
+            <div class="panel-header">
+                <h2>Adjustments</h2>
+                <p>All filters — scroll to see more</p>
+            </div>
+
+            <!-- Everything below header scrolls -->
+            <div class="filters-scroll-area">
+
+                <div class="filters" id="filters-container">
+                    <!-- Filters are injected by JS -->
+                </div>
+
+                <div class="section-divider"></div>
+
+                <div class="presets-header">Presets</div>
+                <div class="presets" id="presets">
+                    <button class="preset-btn" data-preset="vintage">🎞 Vintage</button>
+                    <button class="preset-btn" data-preset="cool">❄️ Cool</button>
+                    <button class="preset-btn" data-preset="warm">🌅 Warm</button>
+                    <button class="preset-btn" data-preset="mono">⬜ Mono</button>
+                    <button class="preset-btn" data-preset="vivid">🌈 Vivid</button>
+                    <button class="preset-btn" data-preset="fade">🌫 Fade</button>
+                </div>
+
+            </div>
+        </aside>
+
     </main>
-    <footer></footer>
-    
-    <script src="script.js"></script>
+
+    <footer class="app-footer">
+        PixelVision — Lightweight browser image editor
+    </footer>
+
+</div>
+
+<script src="./script.js"></script>
 </body>
 </html>
